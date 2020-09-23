@@ -28,6 +28,8 @@ def getKey():
 settings = termios.tcgetattr(sys.stdin)
 #initalize roscore node
 rospy.init_node('teleop_control_node')
+#initalize a publisher
+commandPublisher = rospy.Publisher('/cmd_vel',Twist,queue_size = 10)
 
 #initalize Variables
 key = None
@@ -67,4 +69,5 @@ while key != '\x03':
         msg.linear = Vector3(0.0,0.0,0.0)
         msg.angular = Vector3(0.0,0.0,0.0)
     
-    print(msg)
+    #send the command to the neato
+    commandPublisher.publish(msg)
