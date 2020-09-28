@@ -30,31 +30,37 @@ msgLinVel = Vector3(0.1,0.0,0.0)
 msgRotVel = Vector3(0.0,0.0,0.0)
 #create message
 msg = Twist(linear = msgLinVel,angular = msgRotVel)
-
+#get the robot moving forward
 commandPublisher.publish(msg)
-
-delay = rospy.Rate(.5)
 
 #define the callbackfunction which pulls the desired laser values and updates the stored variables
 def courseCorrect(scanData):
 
-    #filter out arbage values like constant offset around 135
+    #filter out the garbage values which seem to be a constant error around 130 degrees
     if scanData.ranges.index(max(scanData.ranges)) > 135 or scanData.ranges.index(max(scanData.ranges)) < 128:
         
-        #find angle of closest point in laser data
+        #find the angle of the closest point in the lidar scan
         idx = scanData.ranges.index(min(scanData.ranges))
 
-        #course correct to put point in front of robot (180 deg)
-        if idx > 180:
-            msg.angular = Vector3(0.0,0.0,-0.5)
-        elif idx < 180:
-            msg.angular = Vector3(0.0,0.0,0.5)
+        #if the point is too close
+        if min (scanData.ranges) < 1: 
+        
+            #turn away from the obstacle
+            if idx > 180:
+                msg.angular = Vector3(0.0,0.0,0.5)
+            elif idx < 180:
+                msg.angular = Vector3(0.0,0.0,-0.5)
+            else:
+                msg.angular = Vector3(0.0,0.0,-0.5)
+
+        #if the point is far away
         else:
+            #stop turning
             msg.angular = Vector3(0.0,0.0,0.0)
 
-        #send the correction to the robot
         commandPublisher.publish(msg)
-        
-#pull laser data from scanner
+
+#pull laser range finder data        
 laserSubscriber = rospy.Subscriber('/scan',LaserScan,courseCorrect)
+#repeat
 rospy.spin()

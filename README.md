@@ -32,4 +32,11 @@ This is Timothy Novak's repo for the Olin Computational Robotics warmup project.
 	[TODO: Add Gif]
 - ### Person Following Code
 	This mode is where the robot paths towards a person represented by a cylinder. The robot uses the laser range finder to map its environment then it finds the closest point to itself and corrects to place this point in front of itself. The whole time the robot is moving forward at a constant rate so the robot 'chases' the closest point and therefore chases the person when they move through its field of view.
-	[TODO: Add Gif] 
+	[TODO: Add Gif]
+- ### Obstacle Avoider
+	This mode is where the robot paths explores its environment but will run away from obstacles if they get too close. The robot uses its range finder to pull the closest point in the environment. If that point is too close then the robot will course correct to run away from the obstacle.Once the robot is far enough away from the obstacle it will resume moving in a straight line.
+	[TODO: Add Gif]
+- ### Finite state controller
+	This mode replicates the behavior of an affectionate pet: If the robot is far away from you it will listen to the comands you give it, however if it gets too closeit will simply follow you and ask for affection. This behavior is achieved through a finite state controll with states of teleop and person following. If the person is suficiently far away from the robot the robot will follow the teleop controll scheme described above, however if the person gets too close the controll scheme wil switch to the person following mode. 
+	[TODO: add state controller diagram]
+	[TODO: add gif] 
