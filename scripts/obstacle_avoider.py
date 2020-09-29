@@ -25,7 +25,7 @@ commandPublisher = rospy.Publisher('/cmd_vel',Twist,queue_size = 10)
 #initalize Variables
 #message variables
 #only change the x of the linear velocity
-msgLinVel = Vector3(0.1,0.0,0.0)
+msgLinVel = Vector3(0.2,0.0,0.0)
 #only change the z of the rotational velocity
 msgRotVel = Vector3(0.0,0.0,0.0)
 #create message

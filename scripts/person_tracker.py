@@ -38,7 +38,7 @@ delay = rospy.Rate(.5)
 #define the callbackfunction which pulls the desired laser values and updates the stored variables
 def courseCorrect(scanData):
 
-    #filter out arbage values like constant offset around 135
+    #filter out garbage values like constant offset around 135
     if scanData.ranges.index(max(scanData.ranges)) > 135 or scanData.ranges.index(max(scanData.ranges)) < 128:
         
         #find angle of closest point in laser data
